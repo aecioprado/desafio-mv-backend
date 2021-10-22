@@ -1,14 +1,21 @@
 package com.aecioprado.mv.dto;
 
+import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public class LancamentoDto {
+
+public class LancamentoDto implements Serializable {
 	
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5224811368963241639L;
 	public LancamentoDto(Long id, String colaborador, String cpf, String produtos) {
-		super();
 		this.id = id;
 		this.colaborador = colaborador;
 		this.cpf = cpf;
@@ -16,12 +23,14 @@ public class LancamentoDto {
 	}
 	
 	public LancamentoDto() {
-		super();
 	}
+	
 	private Long id;
 	private String colaborador;
 	private String cpf;
 	private String produtos;
+	
+	
 	public Long getId() {
 		return id;
 	}

@@ -2,6 +2,7 @@ package com.aecioprado.mv.service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,11 +61,17 @@ public class LancamentoServiceImp implements ILancamentoService {
 			throw new LancamentoException("Atenção: O CPF informado já está presente na lista do café da manha");
 		}
 	}
+	
+	@Override
+	public Optional<LancamentoEntity> obterPorId(Long id){
+		return this.lancamentoRepo.findById(id);
+		
+	}
 
 	@Override
 	public void validarProdutoExiste(String produtos) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.aecioprado.mv.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.aecioprado.mv.entity.LancamentoEntity;
 
@@ -13,6 +14,9 @@ public interface ILancamentoService {
 	
 	//atualizar
 	public LancamentoEntity atualizar(LancamentoEntity lancamento);
+	
+	//consultar por Id
+	Optional<LancamentoEntity> obterPorId(Long id);
 	
 	//excluir
 	public boolean excluir(Long id); 

@@ -55,6 +55,13 @@ public class LancamentoController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.Lancamentoservice.listarTodos());
 	}
 
+	// listar por Id
+	@GetMapping("/listar/{id}")
+	public ResponseEntity listarPorId(@PathVariable Long id) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(this.Lancamentoservice.obterPorId(id));
+	}
+
 	// deletar
 	@DeleteMapping("/deletar/{id}")
 	public ResponseEntity delete(@PathVariable Long id) {
