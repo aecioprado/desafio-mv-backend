@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Lista do café-da-manhã</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<br/>
+
+
+<!-- Formulario Usuario -->
+	<div class="container" style="width: 600px;">
+		<div class="card" class="card border border-primary"
+			style="background-color: rgb(229, 242, 251); padding: 10px;">
+			
+			
+
+			<!-- Envia(Post) os dados para o UsuarioControllerServlet -->
+			<form action="<%=request.getContextPath()%>/UsuarioControllerServlet" method="post" id="form-usuarios">
+				<h3 class="card-title text-left">Olá!
+				Informe seus dados e o que você vai levar para o café-da-manhã.</h3>
+				
+				<div class="form-group">
+					<label>Nº do item da lista:</label><br /> <input type="text" class="form-control"
+						name="nome" id="nome" autocomplete="off" readonly="readonly"
+						value="#">
+				</div>
+
+				<div class="form-group">
+					<label>Nome do colaborador:</label><br /> <input type="text" class="form-control"
+						name="nome" id="nome" autocomplete="off" required="required"
+						value="informe seu nome">
+				</div>
+
+				<div class="form-group">
+					<label>Cpf:</label><br /> <input type="text"
+						class="form-control" name="username" id="username"
+						autocomplete="off" required="required"
+						value="informe seu cpf">
+				</div>
+
+				<div class="form-group">
+					<label>Produtos:<br>
+					Você pode informar um os mais produtos.
+					(Ex.: bolo, suco de laranja, biscoito)</label><br /> <input type="text"
+						class="form-control" name="email" id="email" autocomplete="off"
+						required="required" value="seus produtos">
+				</div>
+
+
+				<button type="submit" class="btn btn-login btn-success"
+					value="salvar">Salvar/Atualizar</button>
+					
+				<button type="submit" class="btn btn-login btn-success"
+					value="salvar">Deletar</button>	
+				
+				<button type="button" class="btn btn-login btn-success" value="novo"
+					onclick="limparFormulario();">Cancelar</button>
+
+
+			</form>
+		</div>	
+		</div>
+			
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+    
+  </body>
+</html>
