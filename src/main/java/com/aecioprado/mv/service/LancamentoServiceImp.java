@@ -1,5 +1,6 @@
 package com.aecioprado.mv.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,6 +24,7 @@ public class LancamentoServiceImp implements ILancamentoService {
 	@Transactional
 	public LancamentoEntity salvar(LancamentoEntity lancamento) {
 		validarCpf(lancamento.getCpf());
+		validarProdutoExiste(lancamento.getProdutos());
 		return this.lancamentoRepo.save(lancamento);
 	}
 
@@ -70,7 +72,26 @@ public class LancamentoServiceImp implements ILancamentoService {
 
 	@Override
 	public void validarProdutoExiste(String produtos) {
-		// TODO Auto-generated method stub
+		
+		List<LancamentoEntity> todosLancamentos = new ArrayList<LancamentoEntity>();
+		todosLancamentos = lancamentoRepo.findAll();
+		
+		//adiciona numa nova lista apenas os produtos
+		List<String> listaProdutos = new ArrayList<String>();
+		
+		for(LancamentoEntity lancamentos: todosLancamentos) {
+			listaProdutos.add(lancamentos.getProdutos());
+		}
+		
+		//verifica se a lista de produtos atual existe na lista de produtos já cadastrada
+		for(String produto: listaProdutos) {
+			
+			if(produto.contains(produtos)) {
+				throw new LancamentoException("Um ou mais produtos da sua lista já foi cadastrado");
+			}
+		}
+		
+		
 		
 	}
 
