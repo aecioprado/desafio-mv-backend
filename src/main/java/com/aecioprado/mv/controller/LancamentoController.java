@@ -30,7 +30,8 @@ public class LancamentoController {
 		LancamentoEntity lancamento = new LancamentoEntity();
 		lancamento.setColaborador(dto.getColaborador());
 		lancamento.setCpf(dto.getCpf());
-		lancamento.setProdutos(dto.getProdutos());
+		//trima a string de produtos
+		lancamento.setProdutos(dto.getProdutos().toLowerCase().trim());
 
 		try {
 			LancamentoEntity lancamentoSalvo = Lancamentoservice.salvar(lancamento);
@@ -43,9 +44,12 @@ public class LancamentoController {
 	// atualizar
 	@PutMapping("/atualizar")
 	public ResponseEntity atualizar(@RequestBody LancamentoEntity lancamento) {
-
+		
+		try {
 		return ResponseEntity.status(HttpStatus.OK).body(this.Lancamentoservice.atualizar(lancamento));
-
+		} catch (LancamentoException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 
 	// listar

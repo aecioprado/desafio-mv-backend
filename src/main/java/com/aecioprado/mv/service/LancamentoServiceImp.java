@@ -33,6 +33,7 @@ public class LancamentoServiceImp implements ILancamentoService {
 	@Transactional
 	public LancamentoEntity atualizar(LancamentoEntity lancamento) {
 		Objects.requireNonNull(lancamento.getId());
+		validarProdutoExiste(lancamento.getProdutos());
 		return this.lancamentoRepo.save(lancamento);
 	}
 
@@ -43,12 +44,11 @@ public class LancamentoServiceImp implements ILancamentoService {
 		try {
 			this.lancamentoRepo.deleteById(id);
 			return true;
-			
-		}catch (LancamentoException e) {
+
+		} catch (LancamentoException e) {
 			return false;
 		}
 	}
-
 
 	@Override
 	public List<LancamentoEntity> listarTodos() {
@@ -63,16 +63,21 @@ public class LancamentoServiceImp implements ILancamentoService {
 			throw new LancamentoException("Atenção: O CPF informado já está presente na lista do café da manha");
 		}
 	}
-	
+
 	@Override
-	public Optional<LancamentoEntity> obterPorId(Long id){
+	public Optional<LancamentoEntity> obterPorId(Long id) {
 		return this.lancamentoRepo.findById(id);
-		
+
 	}
 
 	@Override
 	public void validarProdutoExiste(String produtos) {
 		
+		//transforma a String em tokens
+		String stringTemp = produtos;
+		String[] produtosTokens = stringTemp.split(",");
+		
+		//cria uma lista todosLancamentos
 		List<LancamentoEntity> todosLancamentos = new ArrayList<LancamentoEntity>();
 		todosLancamentos = lancamentoRepo.findAll();
 		
@@ -83,6 +88,17 @@ public class LancamentoServiceImp implements ILancamentoService {
 			listaProdutos.add(lancamentos.getProdutos());
 		}
 		
+		//compara a array de tokens com todos os itens da listaProdutos
+		//para cada elemento do array de tokens, comparar com cada elemento da lista de produtos
+		//por fim verificar se um elemento da lista contém um elemento do array de tokens
+		for(int i=0; i<produtosTokens.length; i++) {
+			for(int j=0; j<listaProdutos.size(); j++) {
+				if (listaProdutos.get(j) != null && listaProdutos.get(j).contains(produtosTokens[i])) {
+					throw new LancamentoException("Um ou mais produtos da sua lista já foi cadastrado");
+				}
+			}
+		}
+		/*
 		//verifica se a lista de produtos atual existe na lista de produtos já cadastrada
 		for(String produto: listaProdutos) {
 			
@@ -90,9 +106,10 @@ public class LancamentoServiceImp implements ILancamentoService {
 				throw new LancamentoException("Um ou mais produtos da sua lista já foi cadastrado");
 			}
 		}
-		
+		*/
 		
 		
 	}
+
 
 }
