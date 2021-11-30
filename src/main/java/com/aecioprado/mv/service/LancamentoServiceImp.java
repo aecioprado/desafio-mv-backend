@@ -33,6 +33,7 @@ public class LancamentoServiceImp implements ILancamentoService {
 	@Transactional
 	public LancamentoEntity atualizar(LancamentoEntity lancamento) {
 		Objects.requireNonNull(lancamento.getId());
+		validarProdutoExiste(lancamento.getProdutos());
 		return this.lancamentoRepo.save(lancamento);
 	}
 
@@ -43,12 +44,11 @@ public class LancamentoServiceImp implements ILancamentoService {
 		try {
 			this.lancamentoRepo.deleteById(id);
 			return true;
-			
-		}catch (LancamentoException e) {
+
+		} catch (LancamentoException e) {
 			return false;
 		}
 	}
-
 
 	@Override
 	public List<LancamentoEntity> listarTodos() {
@@ -63,16 +63,21 @@ public class LancamentoServiceImp implements ILancamentoService {
 			throw new LancamentoException("Atenção: O CPF informado já está presente na lista do café da manha");
 		}
 	}
-	
+
 	@Override
-	public Optional<LancamentoEntity> obterPorId(Long id){
+	public Optional<LancamentoEntity> obterPorId(Long id) {
 		return this.lancamentoRepo.findById(id);
-		
+
 	}
 
 	@Override
 	public void validarProdutoExiste(String produtos) {
 		
+		//transforma a String em tokens
+		String stringTemp = produtos;
+		String[] produtosTokens = stringTemp.split(",");
+		
+		//recupera uma lista com todos os registros do banco
 		List<LancamentoEntity> todosLancamentos = new ArrayList<LancamentoEntity>();
 		todosLancamentos = lancamentoRepo.findAll();
 		
@@ -83,6 +88,18 @@ public class LancamentoServiceImp implements ILancamentoService {
 			listaProdutos.add(lancamentos.getProdutos());
 		}
 		
+		//compara a array de tokens com todas as strings da listaProdutos
+		//para cada elemento do array de tokens, comparar com cada elemento da lista de produtos
+		//por fim, verificar se um elemento da lista de strings contém um elemento do array de tokens
+		for(int i=0; i<produtosTokens.length; i++) {
+			for(int j=0; j<listaProdutos.size(); j++) {
+				if (listaProdutos.get(j) != null && listaProdutos.get(j).contains(produtosTokens[i])) {
+					//Lança exception assim que houve o primeiro "match"
+					throw new LancamentoException("Um ou mais produtos da sua lista já foi cadastrado");
+				}
+			}
+		}
+		/*
 		//verifica se a lista de produtos atual existe na lista de produtos já cadastrada
 		for(String produto: listaProdutos) {
 			
@@ -90,9 +107,10 @@ public class LancamentoServiceImp implements ILancamentoService {
 				throw new LancamentoException("Um ou mais produtos da sua lista já foi cadastrado");
 			}
 		}
-		
+		*/
 		
 		
 	}
+
 
 }
