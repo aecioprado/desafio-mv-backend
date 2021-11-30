@@ -77,7 +77,7 @@ public class LancamentoServiceImp implements ILancamentoService {
 		String stringTemp = produtos;
 		String[] produtosTokens = stringTemp.split(",");
 		
-		//cria uma lista todosLancamentos
+		//recupera uma lista com todos os registros do banco
 		List<LancamentoEntity> todosLancamentos = new ArrayList<LancamentoEntity>();
 		todosLancamentos = lancamentoRepo.findAll();
 		
@@ -88,12 +88,13 @@ public class LancamentoServiceImp implements ILancamentoService {
 			listaProdutos.add(lancamentos.getProdutos());
 		}
 		
-		//compara a array de tokens com todos os itens da listaProdutos
+		//compara a array de tokens com todas as strings da listaProdutos
 		//para cada elemento do array de tokens, comparar com cada elemento da lista de produtos
-		//por fim verificar se um elemento da lista contém um elemento do array de tokens
+		//por fim, verificar se um elemento da lista de strings contém um elemento do array de tokens
 		for(int i=0; i<produtosTokens.length; i++) {
 			for(int j=0; j<listaProdutos.size(); j++) {
 				if (listaProdutos.get(j) != null && listaProdutos.get(j).contains(produtosTokens[i])) {
+					//Lança exception assim que houve o primeiro "match"
 					throw new LancamentoException("Um ou mais produtos da sua lista já foi cadastrado");
 				}
 			}
