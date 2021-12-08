@@ -21,11 +21,12 @@ public class LancamentoEntity implements Serializable{
 	private static final long serialVersionUID = 7235967612451452483L;
 	
 	
-	// Construtores
+	// Construtor vazio
 	public LancamentoEntity() {
 		super();
 	}
 
+	// Construtor Completo
 	public LancamentoEntity(Long id, String colaborador, String cpf, String produtos) {
 		super();
 		this.id = id;
@@ -38,6 +39,8 @@ public class LancamentoEntity implements Serializable{
 	
 	@JsonInclude(Include.NON_NULL)
 	@Id
+	
+	// Analizar estrategias de geracao de ids
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column(name = "id")
 	private Long id;
