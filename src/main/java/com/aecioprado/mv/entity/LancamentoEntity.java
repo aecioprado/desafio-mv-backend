@@ -3,12 +3,12 @@ package com.aecioprado.mv.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -16,11 +16,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(name = "tb_cafe_da_manha")
 
-public class LancamentoEntity implements Serializable{
-	
+public class LancamentoEntity implements Serializable {
+
 	private static final long serialVersionUID = 7235967612451452483L;
-	
-	
+
 	// Construtores
 	public LancamentoEntity() {
 		super();
@@ -34,26 +33,24 @@ public class LancamentoEntity implements Serializable{
 		this.produtos = produtos;
 	}
 
-	
-	
 	@JsonInclude(Include.NON_NULL)
 	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	
+
 	@JsonInclude(Include.NON_EMPTY)
 	@Column(name = "colaborador")
 	private String colaborador;
-	
+
 	@JsonInclude(Include.NON_EMPTY)
 	@Column(name = "cpf")
 	private String cpf;
-	
+
 	@JsonInclude(Include.NON_EMPTY)
 	@Column(name = "produtos")
 	private String produtos;
-	
+
 	@Override
 	public String toString() {
 		return "LancamentoEntity [id=" + id + ", nome=" + colaborador + ", cpf=" + cpf + ", produtos=" + produtos + "]";
@@ -73,10 +70,10 @@ public class LancamentoEntity implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		LancamentoEntity other = (LancamentoEntity) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id) && Objects.equals(colaborador, other.colaborador)
+		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id)
+				&& Objects.equals(colaborador, other.colaborador)
 				&& Objects.equals(produtos, other.produtos);
 	}
-	
 
 	public Long getId() {
 		return id;
@@ -109,8 +106,5 @@ public class LancamentoEntity implements Serializable{
 	public void setProdutos(String produtos) {
 		this.produtos = produtos;
 	}
-
-	
-	
 
 }
