@@ -6,7 +6,7 @@
  */
 
 
-package com.aecioprado.mv;
+package com.breakfast.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,16 +14,16 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class MvApplication extends SpringBootServletInitializer {
+public class BreakFastApplication extends SpringBootServletInitializer {
 	
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(MvApplication.class);
+		return application.sources(BreakFastApplication.class);
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(MvApplication.class, args);
+		SpringApplication.run(BreakFastApplication.class, args);
 	}
 
 }
