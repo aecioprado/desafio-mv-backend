@@ -1,4 +1,4 @@
-package com.breakfast.app.model;
+package com.breakfast.app.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

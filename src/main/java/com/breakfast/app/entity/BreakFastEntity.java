@@ -1,8 +1,8 @@
-package com.breakfast.app.model;
+package com.breakfast.app.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +18,7 @@ public class BreakFastEntity implements Serializable {
 
 	private static final long serialVersionUID = 7235967612451452483L;
 
-	public BreakFastEntity(Long id, String employeeName, String socialSecurityNumber, Set<ItemEntity> items) {
+	public BreakFastEntity(Long id, String employeeName, String socialSecurityNumber, List<String> items) {
 		this.id = id;
 		this.employeeName = employeeName;
 		this.socialSecurityNumber = socialSecurityNumber;
@@ -40,7 +40,7 @@ public class BreakFastEntity implements Serializable {
 	private String socialSecurityNumber;
 
 	@Column(name = "items")
-	private Set<ItemEntity> items;
+	private List<String> items;
 
 	public Long getId() {
 		return id;
@@ -66,11 +66,11 @@ public class BreakFastEntity implements Serializable {
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
 
-	public Set<ItemEntity> getItems() {
+	public List<String> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<ItemEntity> items) {
+	public void setItems(List<String> items) {
 		this.items = items;
 	}
 
