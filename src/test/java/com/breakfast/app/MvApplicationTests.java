@@ -1,4 +1,4 @@
-package com.aecioprado.mv;
+package com.breakfast.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

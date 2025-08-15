@@ -1,8 +1,9 @@
 package com.breakfast.app.service.impl;
 
+import java.util.List;
 import java.util.Set;
 
-import com.breakfast.app.entity.ItemEntity;
+import com.breakfast.app.entity.BreakFastItemEntity;
 import com.breakfast.app.service.BreakFastService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,20 +17,24 @@ public class BreakFastServiceImp implements BreakFastService {
 	private final BreakFastRepository breakFastRepository;
 
 	public BreakFastServiceImp(BreakFastRepository breakFastRepository) {
+
 		this.breakFastRepository = breakFastRepository;
 	}
 
 	@Override
 	public BreakFastEntity save(BreakFastEntity breakFastEntity) {
-		socialSecurityNumberExists(breakFastEntity.getSocialSecurityNumber());
-		itemExists(breakFastEntity.getItems());
+
+		if(socialSecurityNumberExists(breakFastEntity.getSocialSecurityNumber())){
+			throw new BreakFastException("You Can't Add new Breakfast.");
+		};
+
+		if(itemExists(breakFastEntity.getItems())){
+			throw new BreakFastException("You Can't Add new Breakfast.0");
+		}
+
 		return this.breakFastRepository.save(breakFastEntity);
 	}
 
-	@Override
-	public ResponseEntity<?> listAll() {
-		return this.breakFastRepository.findAll();
-	}
 
 	@Override
 	public boolean socialSecurityNumberExists(String ssn) {
@@ -41,12 +46,12 @@ public class BreakFastServiceImp implements BreakFastService {
 	}
 
 	@Override
-	public boolean itemExists(Set<ItemEntity> items) {
-		for (ItemEntity item : items)
+	public boolean itemExists(List<BreakFastItemEntity> items) {
+		for (BreakFastItemEntity item : items)
 			if (breakFastRepository.itemExists(item.getName())) {
-				throw new BreakFastException("Item Already Exists.");
-			}
+				return true;
+				}
+		return false;
 	}
 }
 
-}

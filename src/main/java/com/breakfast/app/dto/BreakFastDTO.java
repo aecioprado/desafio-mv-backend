@@ -1,5 +1,6 @@
 package com.breakfast.app.dto;
 
+import com.breakfast.app.entity.BreakFastItemEntity;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,15 +12,15 @@ public class BreakFastDTO implements Serializable {
 	private Long id;
 	private String employeeName;
 	private String socialSecurityNumber;
-	private List<String> items;
+	private List<BreakFastItemEntity> items;
 
-	public BreakFastDTO(Long id, String employeeName, String socialSecurityNumber, List<String> items) {
+	public BreakFastDTO(Long id, String employeeName, String socialSecurityNumber, List<BreakFastItemEntity> items) {
 		this.id = id;
 		this.employeeName = employeeName;
 		this.socialSecurityNumber = socialSecurityNumber;
 		this.items = items;
 	}
-	
+
 	public BreakFastDTO() {
 	}
 
@@ -48,11 +49,11 @@ public class BreakFastDTO implements Serializable {
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
 
-	public List<String> getItems() {
+	public List<BreakFastItemEntity> getItems() {
 		return items;
 	}
 
-	public void setItems(List<String> items) {
+	public void setItems(List<BreakFastItemEntity> items) {
 		this.items = items;
 	}
 }
