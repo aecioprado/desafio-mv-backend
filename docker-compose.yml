@@ -1,0 +1,73 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: breakfast-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: breakfast_db
+      MYSQL_USER: breakfast_user
+      MYSQL_PASSWORD: breakfast_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - breakfast-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "breakfast_user", "-pbreakfast_pass"]
+      timeout: 20s
+      retries: 10
+      interval: 30s
+      start_period: 60s
+
+  # Spring Boot Application
+  breakfast-app:
+    image: openjdk:21-jdk-slim
+    container_name: breakfast-springboot
+    restart: unless-stopped
+    environment:
+      # Database configuration
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/breakfast_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: breakfast_user
+      SPRING_DATASOURCE_PASSWORD: breakfast_pass
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+
+      # JPA/Hibernate configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+      SPRING_JPA_SHOW_SQL: true
+
+      # Server configuration
+      SERVER_PORT: 8080
+
+      # Logging
+      LOGGING_LEVEL_COM_YOURPACKAGE: DEBUG
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: INFO
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/breakfast-app.jar:/app/breakfast-app.jar:ro
+    working_dir: /app
+    command: ["java", "-jar", "breakfast-app.jar"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - breakfast-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health", "||", "exit", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  breakfast-network:
+    driver: bridge
