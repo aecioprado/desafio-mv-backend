@@ -25,7 +25,8 @@ hs_err_pid*
 # target folder
 target/
 **/target
-.idea
-.mvn
-.settings
+.idea/
+.mvn/
+.settings/
+.vscode/
 .classpath
