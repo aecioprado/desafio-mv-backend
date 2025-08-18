@@ -49,7 +49,6 @@ fi
 echo -e "${GREEN}✅ Services started successfully!${NC}"
 echo ""
 echo -e "${GREEN}🌐 Application: http://localhost:8080/api${NC}"
-echo -e "${GREEN}🗄️  phpMyAdmin: http://localhost:8081${NC}"
 echo ""
 echo "📋 View logs: docker-compose logs -f"
 echo "🛑 Stop services: docker-compose down"
