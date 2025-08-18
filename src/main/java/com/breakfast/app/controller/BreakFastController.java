@@ -52,16 +52,14 @@ public class BreakFastController {
 	}
 
 
-	/*@GetMapping("/list")
-	public ResponseEntity<?> list() {
-
+	@GetMapping("/list")
+	public ResponseEntity<?> findAll() {
 		try {
-			return breakFastService.listAll();
+			return (ResponseEntity<?>) breakFastService.findAll();
 		} catch (BreakFastException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 			}
 		}
-*/
 
 
 	private BreakFastEntity convertDtoToEntity(BreakFastDTO dto) {
