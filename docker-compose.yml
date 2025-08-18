@@ -25,6 +25,8 @@ services:
 
   # Spring Boot Application
   breakfast-app:
+    # optional imagem eclipse-temurin:21-jre-alpine
+    # Smaller than openjdk:21-jdk-slim
     image: openjdk:21-jdk-slim
     container_name: breakfast-springboot
     restart: unless-stopped
@@ -52,10 +54,21 @@ services:
       LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: INFO
     ports:
       - "8080:8080"
+      - "5005:5005" #debug port
     volumes:
       - ./target/breakfast-app.jar:/app/breakfast-app.jar:ro
     working_dir: /app
-    command: ["java", "-jar", "breakfast-app.jar"]
+    command: [
+      "java",
+      # Disable JMX (also set via env var above)
+      "-Dspring.jmx.enabled=false",
+      # Disable AWT/GUI components
+      "-Djava.awt.headless=true",
+      # Remote debugging configuration
+      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005",
+      # JAR file
+      "-jar", "breakfast-app.jar"
+    ]
     depends_on:
       mysql:
         condition: service_healthy
